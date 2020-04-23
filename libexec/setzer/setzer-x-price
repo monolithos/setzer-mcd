@@ -42,7 +42,7 @@ case $src in
   };;
   cryptocompare) {
     json=$(curl -sS "https://min-api.cryptocompare.com/data/price?fsym=${base^^}&tsyms=${quote^^}")
-    setzer --format "$(jshon <<<"$json" -e USD -u)"
+    setzer --format "$(jshon <<<"$json" -e "${quote^^}" -u)"
   };;
   ddex) {
     json=$(curl -sS "https://api.ddex.io/v4/markets/${base^^}-${quote^^}")
@@ -87,6 +87,18 @@ case $src in
   upbit) {
     json=$(curl -sS "https://api.upbit.com/v1/ticker?markets=${quote^^}-${base^^}")
     setzer --format "$(jshon <<<"$json" -e 0 -e trade_price)"
+  };;
+  exchangeratesapi) {
+    json=$(curl -sS "https://api.exchangeratesapi.io/latest?base=${base^^}")
+    setzer --format "$(jshon <<<"$json" -e rates -e "${quote^^}")"
+  };;
+  cbr) {
+    json=$(curl -sS "https://www.cbr-xml-daily.ru/daily_json.js")
+    setzer --format "$(jshon <<<"$json" -e Valute -e "${base^^}" -e Value)"
+  };;
+  ratesapi) {
+    json=$(curl -sS "https://api.ratesapi.io/api/latest?base=${base^^}&symbols=${quote^^}&rtype=fpy")
+    setzer --format "$(jshon <<<"$json" -e rates -e "${quote^^}")"
   };;
   *) {
     echo >&2 "Error: exchange not recognised: $src"

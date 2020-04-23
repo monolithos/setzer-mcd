@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+comma=","
+point="."
+
+printf "%.10f\n" "${1/$point/$comma}"

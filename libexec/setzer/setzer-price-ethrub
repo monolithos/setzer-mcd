@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+pair=ethrub
+sources=(
+  cryptocompare
+  binance
+  bitstamp
+  coinbase
+  gemini
+)
+
+
+case $1 in
+  binance|cryptocompare) {
+    setzer x-price "$1" "$pair"
+  };;
+  bitstamp|coinbase|gemini) {
+    eth_usd=$(setzer price ethusd "$1")
+    usd_rub=$(setzer price usdrub)
+    setzer --format "$(bc -l <<<"$eth_usd * $usd_rub")"
+  };;
+  *) {
+    setzer --price-commands "-$1-" $pair "${sources[@]}"
+  };;
+esac
