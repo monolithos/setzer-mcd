@@ -7,11 +7,12 @@ sources=(
   bitstamp
   coinbase
   gemini
+  exmo
 )
 
 
 case $1 in
-  binance|cryptocompare) {
+  binance|cryptocompare|exmo) {
     setzer x-price "$1" "$pair"
   };;
   bitstamp|coinbase|gemini) {
