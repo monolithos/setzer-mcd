@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+pair=mdtrub
+sources=(
+  cryptocompare
+  binance
+  bitstamp
+  coinbase
+  gemini
+  exmo
+)
+
+
+case $1 in
+  binance|cryptocompare|exmo) {
+    echo 100.0000000000
+  };;
+  bitstamp|coinbase|gemini) {
+    echo 100.0000000000
+  };;
+  *) {
+    setzer --price-commands "-$1-" $pair "${sources[@]}"
+  };;
+esac
