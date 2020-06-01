@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-comma=","
-point="."
+printf "%.10f\n" "$1"
 
-printf -v res "%.10f\n" "${1/$point/$comma}"
-echo "${res/$comma/$point}"
+#comma=","
+#point="."
+
+#printf -v res "%.10f\n" "${1/$point/$comma}"
+#echo "${res/$comma/$point}"
