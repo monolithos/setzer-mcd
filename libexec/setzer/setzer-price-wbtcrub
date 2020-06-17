@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+pair=wbtcusd
+sources=(
+  ddex
+  kyber
+)
+
+case $1 in
+  ddex) {
+    wbtc_usdt=$(setzer x-price "$1" wbtc:usdt)
+    usdt_usd=$(setzer price usdtusd)
+    usd_rub=$(setzer price usdrub)
+    setzer --format "$(bc -l <<<"$wbtc_usdt * $usdt_usd * $usd_rub")"
+  };;
+  kyber) {
+    knc_eth=$(setzer x-price "$1" 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599)
+    eth_rub=$(setzer price ethrub)
+    setzer --format "$(bc -l <<<"$knc_eth * $eth_rub")"
+  };;
+  *) {
+    setzer --price-commands "-$1-" $pair "${sources[@]}"
+  };;
+esac
+
