@@ -1,6 +1,6 @@
 # Setzer MCD
 
-Query USD price feeds
+Query RUB, USD price feeds
 
 ## Usage
 
